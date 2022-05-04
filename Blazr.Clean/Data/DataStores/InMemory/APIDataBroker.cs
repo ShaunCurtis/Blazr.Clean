@@ -11,10 +11,10 @@ public class APIDataBroker : IDataBroker
     public APIDataBroker(HttpClient httpClient)
         => this._httpClient = httpClient!;
 
-    public async ValueTask<bool> AddRecordAsync<TRecord>(TRecord record) where TRecord : class
+    public async ValueTask<bool> AddRecordAsync<TRecord>(TRecord record) where TRecord : class, new()
     {
         var result = false;
-        var response = await this.httpClient.PostAsJsonAsync<TRecord>($"/api/add/{record?.GetType().Name}", record);
+        var response = await this.httpClient.PostAsJsonAsync<TRecord>($"/api/add/{record?.GetType().Name}", record!);
         if (response.IsSuccessStatusCode)
             result = await response.Content.ReadFromJsonAsync<bool>();
         return result;
@@ -22,11 +22,11 @@ public class APIDataBroker : IDataBroker
 
     public async ValueTask<IEnumerable<TRecord>> GetRecordsAsync<TRecord>(ListOptions options) where TRecord : class, new()
     {
-        var result = false;
+        IEnumerable<TRecord>? result = null;
         var rec = new TRecord();
         var response = await this.httpClient.PostAsJsonAsync<ListOptions>($"/api/add/{rec.GetType().Name}", options);
         if (response.IsSuccessStatusCode)
             result = await response.Content.ReadFromJsonAsync<IEnumerable<TRecord>>();
-        return result;
+        return result ?? new List<TRecord>();
     }
 }

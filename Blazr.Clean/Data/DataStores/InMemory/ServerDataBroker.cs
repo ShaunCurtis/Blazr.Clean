@@ -20,7 +20,7 @@ public class ServerDataBroker : IDataBroker
         }
     }
 
-    public async ValueTask<bool> AddRecordAsync<TRecord>(TRecord item) where TRecord : class
+    public async ValueTask<bool> AddRecordAsync<TRecord>(TRecord item) where TRecord : class, new()
     {
         using var dbContext = database.CreateDbContext();
         dbContext.Add(item);
@@ -28,7 +28,7 @@ public class ServerDataBroker : IDataBroker
         return await dbContext.SaveChangesAsync() == 1;
     }
 
-    public async ValueTask<IEnumerable<TRecord>> GetRecordsAsync<TRecord>(ListOptions options) where TRecord : class
+    public async ValueTask<IEnumerable<TRecord>> GetRecordsAsync<TRecord>(ListOptions options) where TRecord : class, new ()
     {
         using var dbContext = database.CreateDbContext();
 
