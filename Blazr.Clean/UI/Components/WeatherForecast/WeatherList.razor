@@ -1,0 +1,51 @@
+﻿@using Blazr.Clean.Data
+@using Blazr.Clean.Core
+@namespace Blazr.Clean.UI
+@inject IViewService<WeatherForecast> ViewService
+@implements IDisposable
+
+<div>
+
+    @if (this.ViewService.Records == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Temp. (C)</th>
+                    <th>Temp. (F)</th>
+                    <th>Summary</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var forecast in this.ViewService.Records)
+                {
+                    <tr>
+                        <td>@forecast.Date.ToShortDateString()</td>
+                        <td>@forecast.TemperatureC</td>
+                        <td>@forecast.TemperatureF</td>
+                        <td>@forecast.Summary</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await this.ViewService.GetRecordsAsync(new ListOptions { PageSize = 1000 });
+        this.ViewService.ListUpdated += this.OnListChanged;
+    }
+
+    private void OnListChanged(object? sender, EventArgs e)
+        => this.InvokeAsync(this.StateHasChanged);
+
+    public void Dispose()
+        => this.ViewService.ListUpdated -= this.OnListChanged;
+}

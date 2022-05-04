@@ -1,0 +1,22 @@
+﻿@page "/fetchdata"
+
+<PageTitle>Weather forecasts</PageTitle>
+
+@using Blazr.Clean.Data
+@using Blazr.Clean.Core
+@inject IViewService<WeatherForecast> ViewService
+
+<h1>Weather forecasts</h1>
+
+<p>This component demonstrates fetching data from a service.</p>
+
+<div class="p-2 text-end">
+    <button class="btn btn-primary" @onclick=this.AddRecord>Add Record</button>
+</div>
+
+<WeatherList />
+
+@code {
+    private async Task AddRecord()
+        => await this.ViewService.AddRecordAsync(WeatherForecastData.GetForecast());
+}

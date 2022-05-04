@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32407.343
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazr.Clean", "Blazr.Clean\Blazr.Clean.csproj", "{A47EE092-9BFC-4AC9-87A0-E6DC3E4330E8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A47EE092-9BFC-4AC9-87A0-E6DC3E4330E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A47EE092-9BFC-4AC9-87A0-E6DC3E4330E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A47EE092-9BFC-4AC9-87A0-E6DC3E4330E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A47EE092-9BFC-4AC9-87A0-E6DC3E4330E8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6D008AE1-067B-41A9-B4A1-708A44711543}
+	EndGlobalSection
+EndGlobal
