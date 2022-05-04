@@ -5,6 +5,11 @@ VisualStudioVersion = 17.1.32407.343
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazr.Clean", "Blazr.Clean\Blazr.Clean.csproj", "{A47EE092-9BFC-4AC9-87A0-E6DC3E4330E8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{B7D0DEFF-ADC1-4F77-858B-9AE2DC2050BC}"
+	ProjectSection(SolutionItems) = preProject
+		Data.md = Data.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
