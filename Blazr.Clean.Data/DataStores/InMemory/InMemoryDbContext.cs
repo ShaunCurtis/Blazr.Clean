@@ -4,10 +4,11 @@
 /// If you use it, donate something to a charity somewhere
 /// ============================================================
 
-namespace Blazr.Clean.Core;
+namespace Blazr.Clean.Data;
 
-public class ListOptions
+public class InMemoryDbContext : DbContext
 {
-    public int StartIndex { get; set; } = 0;
-    public int PageSize { get; set; } = 25;
+    public DbSet<WeatherForecast>? WeatherForecast { get; set; }
+
+    public InMemoryDbContext(DbContextOptions<InMemoryDbContext> options) : base(options) { }
 }

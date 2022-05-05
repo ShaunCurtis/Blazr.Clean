@@ -1,7 +1,3 @@
-﻿namespace Blazr.Clean.Core
-{
-    public class Program
-    {
+﻿global using System.ComponentModel.DataAnnotations;
 
-    }
-}
+namespace Blazr.Clean.Core;

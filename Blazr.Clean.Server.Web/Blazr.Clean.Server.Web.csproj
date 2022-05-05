@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Blazr.Clean.Core\Blazr.Clean.Core.csproj" />
+    <ProjectReference Include="..\Blazr.Clean.Data\Blazr.Clean.Data.csproj" />
+    <ProjectReference Include="..\Blazr.Clean.UI\Blazr.Clean.UI.csproj" />
+    <ProjectReference Include="..\Blazr.Clean\Blazr.Clean.csproj" />
+  </ItemGroup>
+
+</Project>
