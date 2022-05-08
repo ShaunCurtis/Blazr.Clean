@@ -1,6 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Mvc.ApplicationParts;
-/// ============================================================
+﻿/// ============================================================
 /// Author: Shaun Curtis, Cold Elm Coders
 /// License: Use And Donate
 /// If you use it, donate something to a charity somewhere
@@ -46,7 +44,7 @@ public static class ServiceExtensions
     public static void AddServerAppServices<TDbContext>(this IServiceCollection services, Action<DbContextOptionsBuilder>? optionsAction)
         where TDbContext : DbContext
     {
-        services.AddControllers().PartManager.ApplicationParts.Add(new AssemblyPart(typeof(Blazr.Clean.Controllers.WeatherForecastController).Assembly));
+        //services.AddControllers().PartManager.ApplicationParts.Add(new AssemblyPart(typeof(Blazr.Clean.Controllers.WeatherForecastController).Assembly));
         services.AddDbContextFactory<TDbContext>(optionsAction);
         services.AddDbContextFactory<InMemoryDbContext>(options => options.UseInMemoryDatabase("TestDb"));
         services.AddSingleton<IDataBroker, ServerDataBroker>();

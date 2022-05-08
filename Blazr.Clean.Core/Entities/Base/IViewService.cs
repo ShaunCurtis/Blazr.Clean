@@ -10,6 +10,8 @@ public interface IViewService<TRecord> where TRecord : class
 {
     public event EventHandler? ListUpdated;
     public IEnumerable<TRecord> Records { get; }
-    public ValueTask<bool> AddRecordAsync(TRecord record);
+
+    public TRecord Record { get; }
+    public ValueTask<bool> AddRecordAsync();
     public ValueTask GetRecordsAsync(ListOptions options);
 }

@@ -16,6 +16,17 @@
 <WeatherList />
 
 @code {
+
+    // Demo code to add a test record
     private async Task AddRecord()
-        => await this.ViewService.AddRecordAsync(WeatherForecastData.GetForecast());
+    {
+        // Emulate editing the a new record in a UI Edit form
+        var rec = WeatherForecastData.GetForecast();
+        this.ViewService.Record.Date = rec.Date;
+        this.ViewService.Record.Id = rec.Id;
+        this.ViewService.Record.TemperatureC = rec.TemperatureC;
+        this.ViewService.Record.Summary = rec.Summary;
+
+        await this.ViewService.AddRecordAsync();
+    }
 }

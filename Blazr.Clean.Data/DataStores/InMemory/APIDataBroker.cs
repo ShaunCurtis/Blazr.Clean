@@ -27,7 +27,7 @@ public class APIDataBroker : IDataBroker
     {
         IEnumerable<TRecord>? result = null;
         var rec = new TRecord();
-        var response = await this.httpClient.PostAsJsonAsync<ListOptions>($"/api/add/{rec.GetType().Name}", options);
+        var response = await this.httpClient.PostAsJsonAsync<ListOptions>($"/api/list/{rec.GetType().Name}", options);
         if (response.IsSuccessStatusCode)
             result = await response.Content.ReadFromJsonAsync<IEnumerable<TRecord>>();
         return result ?? new List<TRecord>();

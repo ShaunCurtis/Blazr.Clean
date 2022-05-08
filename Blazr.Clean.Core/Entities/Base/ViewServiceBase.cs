@@ -29,18 +29,24 @@ public abstract class ViewServiceBase<TRecord> : IViewService<TRecord> where TRe
     // Updated whenever GetRecordsAsync is called
     public IEnumerable<TRecord> Records { get; protected set; } = new List<TRecord>();
 
+    // The current record being displayed or edited
+    public TRecord Record { get; protected set; } = new TRecord();
+
     // New - gets the DI registered IDataBroker registeted service
     public ViewServiceBase(IDataBroker dataBroker)
         => _broker = dataBroker;
 
     // Command Method that adds a new record to the data store
-    public async ValueTask<bool> AddRecordAsync(TRecord record)
+    public async ValueTask<bool> AddRecordAsync()
     {
-        var result = await _broker.AddRecordAsync<TRecord>(record);
+        // Add the record using the Data Broker
+        var result = await _broker.AddRecordAsync<TRecord>(this.Record);
 
         if (result)
         {
+            //Read the record back from the data store
             await this.GetRecordsAsync(_options);
+            // Raise the ListChanged event as one record within it has changed
             this.ListUpdated?.Invoke(this, EventArgs.Empty);
         }
 
@@ -50,7 +56,9 @@ public abstract class ViewServiceBase<TRecord> : IViewService<TRecord> where TRe
     // Command method that populates the Records collection based on the List Options
     public async ValueTask GetRecordsAsync(ListOptions options)
     {
+        // Save the latest options locally
         _options = options;
+        // Gets the record collection
         this.Records = await _broker.GetRecordsAsync<TRecord>(options);
     }
 }

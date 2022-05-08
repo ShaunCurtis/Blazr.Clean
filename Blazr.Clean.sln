@@ -8,6 +8,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{B7D0DEFF-ADC1-4F77-858B-9AE2DC2050BC}"
 	ProjectSection(SolutionItems) = preProject
 		Data.md = Data.md
+		Design.md = Design.md
+		Routes-And-Components.md = Routes-And-Components.md
+		Views.md = Views.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazr.Clean.Data", "Blazr.Clean.Data\Blazr.Clean.Data.csproj", "{EA1ADF4F-A9BC-436A-BF22-B16F7DD75718}"
@@ -16,7 +19,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazr.Clean.Core", "Blazr.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazr.Clean.UI", "Blazr.Clean.UI\Blazr.Clean.UI.csproj", "{99B086CA-25A8-4353-A389-A401BD00C1CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazr.Clean.Server.Web", "Blazr.Clean.Server.Web\Blazr.Clean.Server.Web.csproj", "{27EE65C8-9B61-4CEE-B3EE-B13BAD219C18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazr.Clean.Server.Web", "Blazr.Clean.Server.Web\Blazr.Clean.Server.Web.csproj", "{27EE65C8-9B61-4CEE-B3EE-B13BAD219C18}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazr.Clean.WASM", "Blazr.Clean.WASM\Blazr.Clean.WASM.csproj", "{B5B6D76F-B445-4DBA-AC19-4B5ECF7213EF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazr.Clean.WASM.Web", "Blazr.Clean.WASM.Web\Blazr.Clean.WASM.Web.csproj", "{7E6DC760-E356-4F5F-9AA1-4344C4E3FE9E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +51,14 @@ Global
 		{27EE65C8-9B61-4CEE-B3EE-B13BAD219C18}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27EE65C8-9B61-4CEE-B3EE-B13BAD219C18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27EE65C8-9B61-4CEE-B3EE-B13BAD219C18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5B6D76F-B445-4DBA-AC19-4B5ECF7213EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5B6D76F-B445-4DBA-AC19-4B5ECF7213EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5B6D76F-B445-4DBA-AC19-4B5ECF7213EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5B6D76F-B445-4DBA-AC19-4B5ECF7213EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E6DC760-E356-4F5F-9AA1-4344C4E3FE9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E6DC760-E356-4F5F-9AA1-4344C4E3FE9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E6DC760-E356-4F5F-9AA1-4344C4E3FE9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E6DC760-E356-4F5F-9AA1-4344C4E3FE9E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

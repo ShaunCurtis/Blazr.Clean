@@ -19,9 +19,4 @@
     <ProjectReference Include="..\Blazr.Clean.Core\Blazr.Clean.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Entities\Components\" />
-    <Folder Include="Entities\Routes\" />
-  </ItemGroup>
-
 </Project>

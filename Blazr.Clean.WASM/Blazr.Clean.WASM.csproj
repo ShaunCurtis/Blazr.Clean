@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.4" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Blazr.Clean.Core\Blazr.Clean.Core.csproj" />
+    <ProjectReference Include="..\Blazr.Clean.Data\Blazr.Clean.Data.csproj" />
+    <ProjectReference Include="..\Blazr.Clean.UI\Blazr.Clean.UI.csproj" />
+  </ItemGroup>
+
+</Project>

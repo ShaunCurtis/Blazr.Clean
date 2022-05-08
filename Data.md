@@ -1,6 +1,6 @@
 # Data
 
-The data classes reside in the Core domain.  They are used by all three domains.
+The data classes reside in the Core domain.  They are used throughout the application.
 
 The modified data class `WeatherForecast` looks like this:
 
@@ -23,17 +23,17 @@ Collections present a few issues that are not often considered when designing an
 1. Never retrieve unconstrained collections.  All methods that retrieve lists that can grow require a `ListOptions` object argument that constrains the number of records retrieved.
 2. Return `IEnumerable<T>` collections for normal query methods.
 
-`ListOptions` looks like this:
+The `ListOptions` class looks like this:
 
 ```csharp
 public class ListOptions
 {
     public int StartIndex { get; set; } = 0;
-    public int PageSize { get; set; } = 25;
+    public int PageSize { get; set; } = 1000;
 }
 ```
 
-This can get extended to include sorting and filtering if required.  Note the default page size is set small.
+This can be extended to include sorting and filtering if required.  Note the default page size is set to 1000.
 
 ## DBContext
 
@@ -74,6 +74,8 @@ In this simple application we only implement two CRUD operations.  Note:
 1. The methods use generics.  We'll see how the implementation works in the base class.
 2. All the methods are `Async` and use `ValueTasks`.
 3. The `GetRecordsAsync` has a `ListOptions` argument.
+
+### Server Data Broker
 
 The Server data broker looks like:
 
@@ -147,25 +149,62 @@ Thee are comments in the code.
 5. The list method builds a query based on `ListOptions` against the `IQueryable` collection and then returns the async result.
 
 This design is a little different to the classic `IRepository` pattern.  The DataBroker is generic.  It simplifies the data access classes you need: you use the same DI instance for all standard CRUD/List operations on all DBSets in the database.
-  
 
-## Views
+### APIDataBroker
 
-In Blazor views, which provide the links between the Core and UI domain code are implemented as services.  Their scope depends on their usage.
-
-This application uses an `IViewService` interface to define and then a generics based `ViewServiceBase` abstract class to implement core functionality.  In more complex applications you may need to implement a more complex model, but this simplistic impelementation demonstrates the key principles.
-
-**IViewService**
+The API data broker implementation uses the `HttpClient` to query the server side API.  The key to making this generic is using structured nomeclature. 
 
 ```csharp
-public interface IViewService<TRecord> where TRecord : class
+public class APIDataBroker : IDataBroker
 {
-    public event EventHandler? ListUpdated;
-    public IEnumerable<TRecord> Records { get; }
-    public ValueTask<bool> AddRecordAsync(TRecord record);
-    public ValueTask GetRecordsAsync(ListOptions options);
+    private readonly HttpClient? _httpClient;
+    private HttpClient httpClient => _httpClient!;
+
+    public APIDataBroker(HttpClient httpClient)
+        => this._httpClient = httpClient!;
+
+    public async ValueTask<bool> AddRecordAsync<TRecord>(TRecord record) where TRecord : class, new()
+    {
+        var result = false;
+        var response = await this.httpClient.PostAsJsonAsync<TRecord>($"/api/add/{record?.GetType().Name}", record!);
+        if (response.IsSuccessStatusCode)
+            result = await response.Content.ReadFromJsonAsync<bool>();
+        return result;
+    }
+
+    public async ValueTask<IEnumerable<TRecord>> GetRecordsAsync<TRecord>(ListOptions options) where TRecord : class, new()
+    {
+        IEnumerable<TRecord>? result = null;
+        var rec = new TRecord();
+        var response = await this.httpClient.PostAsJsonAsync<ListOptions>($"/api/list/{rec.GetType().Name}", options);
+        if (response.IsSuccessStatusCode)
+            result = await response.Content.ReadFromJsonAsync<IEnumerable<TRecord>>();
+        return result ?? new List<TRecord>();
+    }
 }
 ```
 
-****
- 
+## WeatherForecastController
+
+The controller on the other end of the API calls simply interfaces with the Server Data Broker.  We can't maker this generic, so we either create a single controller with a lot of `ifs` or `case` statements or create a single controller per record set.
+  
+```csharp
+[ApiController]
+public class WeatherForecastController : Mvc.ControllerBase
+{
+    private IDataBroker _dataBroker;
+
+    public WeatherForecastController(IDataBroker dataBroker)
+        => _dataBroker = dataBroker;
+
+    [Mvc.Route("/api/list/[controller]")]
+    [Mvc.HttpPost]
+    public async Task<IEnumerable<WeatherForecast>> GetRecordsAsync([FromBody] ListOptions options)
+        => await _dataBroker.GetRecordsAsync<WeatherForecast>(options);
+
+    [Mvc.Route("/api/add/[controller]")]
+    [Mvc.HttpPost]
+    public async Task<bool> AddRecordAsync([FromBody] WeatherForecast record)
+        => await _dataBroker.AddRecordAsync<WeatherForecast>(record);
+}
+```
