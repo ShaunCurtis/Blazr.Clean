@@ -22,7 +22,7 @@ Generics let us boilerplate code.  A common design pattern is:
 2. An `abstract` base class that implements the interface functionality using generics.
 3. Concrete implementation class that simply fix the generics and inherit their functionality from the base class.
 
-One interface, one abstract. many concrete.
+One interface, one abstract class, many concrete implementations.
 
 We can see this in the View Services.  The concrete `WeatherForecastViewService` looks like this:
 
@@ -37,8 +37,8 @@ public class WeatherForecastViewService : ViewServiceBase<WeatherForecast>
 
 ## Database Access
 
-I always use an ORM to simplify database access.  In this project I've stuck with mainstream Entity Framework, but could have used Dapper or Linq2DB.
+I always use an ORM [Object-Relational Mapper] to simplify database access.  In this project I've stuck with mainstream Entity Framework, but could have used Dapper or Linq2DB.
 
-There's no classic Repository Pattern implementation.  Instead there's a generics based Data Broker pattern that removes most of the repository pattern complexity.  Generics are applied at the method level: the same Data Broker is used for CRUD and List operations on all data sets.
+There's no classic Repository Pattern implementation.  Instead I use a generics based Data Broker pattern that removes most of the repository pattern complexity.  Generics are applied at the method level: one data broker service handles CRUD and List operations for all data sets.
 
-EF is kept simple, mapping to database tables and views.  I'm a firm believer in clean design.  The relationships between data objects is part of the application/business logic and belong on the core domain, definitley not the Data layer! 
+I also keep EF is simple, `DataSets` map directly to database tables and views.  I'm a firm believer in clean design: the relationships between data objects is part of the application/business logic and belongs in the core domain, definitley not the Data layer! 

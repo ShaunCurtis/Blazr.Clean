@@ -14,7 +14,7 @@ public class ServerDataBroker : IDataBroker
     public ServerDataBroker(IDbContextFactory<InMemoryDbContext> db)
     {
         this.database = db;
-        // We need to polulate the database so we get a teat data set from WeatherForecastData
+        // We need to populate the database so we get a test data set from the static class WeatherForecastData
         if (!_initialized)
         {
             using var dbContext = database.CreateDbContext();

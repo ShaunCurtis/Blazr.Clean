@@ -3,8 +3,7 @@
 /// License: Use And Donate
 /// If you use it, donate something to a charity somewhere
 /// ============================================================
-
-namespace Blazr.Clean.WASM.Dual;
+namespace Blazr.Clean.WASM.Configurations;
 
 /// <summary>
 /// This startic class holds the extension methods for configuring 

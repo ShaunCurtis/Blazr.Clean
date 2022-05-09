@@ -7,20 +7,9 @@
 namespace Blazr.Clean.Controllers;
 
 [ApiController]
-public class WeatherForecastController : Mvc.ControllerBase
+public class WeatherForecastController : AppControllerBase<WeatherForecast>
 {
-    private IDataBroker _dataBroker;
-
-    public WeatherForecastController(IDataBroker dataBroker)
-        => _dataBroker = dataBroker;
-
-    [Mvc.Route("/api/list/[controller]")]
-    [Mvc.HttpPost]
-    public async Task<IEnumerable<WeatherForecast>> GetRecordsAsync([FromBody] ListOptions options)
-        => await _dataBroker.GetRecordsAsync<WeatherForecast>(options);
-
-    [Mvc.Route("/api/add/[controller]")]
-    [Mvc.HttpPost]
-    public async Task<bool> AddRecordAsync([FromBody] WeatherForecast record)
-        => await _dataBroker.AddRecordAsync<WeatherForecast>(record);
+    public WeatherForecastController(IDataBroker dataBroker) 
+        : base(dataBroker)
+    {}
 }

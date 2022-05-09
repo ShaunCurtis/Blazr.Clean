@@ -1,0 +1,12 @@
+﻿@*
+    This is the orginal _Host file with the Component type full qualified
+    In this case App is now in Blazr.Clean.UI
+*@
+@page "/"
+@namespace Blazr.Clean.Server.Web.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "_Layout";
+}
+
+<component type="typeof(Blazr.Clean.UI.HydaApp)" render-mode="ServerPrerendered" />

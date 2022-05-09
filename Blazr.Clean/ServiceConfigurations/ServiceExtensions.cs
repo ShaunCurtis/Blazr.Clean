@@ -30,7 +30,6 @@ public static class ServiceExtensions
         where TDbContext : DbContext
     {
         services.AddDbContextFactory<TDbContext>(optionsAction);
-        services.AddDbContextFactory<InMemoryDbContext>(options => options.UseInMemoryDatabase("TestDb"));
         services.AddSingleton<IDataBroker, ServerDataBroker>();
         services.AddScoped<IViewService<WeatherForecast>, WeatherForecastViewService>();
     }
@@ -44,19 +43,7 @@ public static class ServiceExtensions
     public static void AddServerAppServices<TDbContext>(this IServiceCollection services, Action<DbContextOptionsBuilder>? optionsAction)
         where TDbContext : DbContext
     {
-        //services.AddControllers().PartManager.ApplicationParts.Add(new AssemblyPart(typeof(Blazr.Clean.Controllers.WeatherForecastController).Assembly));
         services.AddDbContextFactory<TDbContext>(optionsAction);
-        services.AddDbContextFactory<InMemoryDbContext>(options => options.UseInMemoryDatabase("TestDb"));
         services.AddSingleton<IDataBroker, ServerDataBroker>();
-    }
-
-    /// <summary>
-    /// Builds the Blazor WASM SPA services
-    /// </summary>
-    /// <param name="services"></param>
-    public static void AddBlazorWASMAppServices(this IServiceCollection services)
-    {
-        services.AddSingleton<IDataBroker, APIDataBroker>();
-        services.AddScoped<IViewService<WeatherForecast>, WeatherForecastViewService>();
     }
 }

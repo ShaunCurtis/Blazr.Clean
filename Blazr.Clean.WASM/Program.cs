@@ -1,6 +1,4 @@
-global using Blazr.Clean.Core;
-global using Blazr.Clean.Data;
-using Blazr.Clean.WASM;
+using Blazr.Clean.WASM.Configurations;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
