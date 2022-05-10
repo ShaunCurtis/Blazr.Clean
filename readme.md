@@ -4,8 +4,8 @@ This repository contains a Demo Blazor solution based on the out-of-the-box temp
 
 There are a set of notes attached which describe the solution in detail.
 
-1. [Design](./design.md)
-2. [Data](./design.md)
+1. [Design](./Design.md)
+2. [Data](./Data.md)
 3. [Views](./Views.md)
-4. [Routes and Components](./Routes-and-components.md)
-5. [Applications](./applications.md)
+4. [Routes and Components](./Routes-And-Components.md)
+5. [Applications](./Applications.md)

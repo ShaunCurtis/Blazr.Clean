@@ -37,8 +37,8 @@ public class WeatherForecastViewService : ViewServiceBase<WeatherForecast>
 
 ## Database Access
 
-I always use an ORM [Object-Relational Mapper] to simplify database access.  In this project I've stuck with mainstream Entity Framework, but could have used Dapper or Linq2DB.
+I use an ORM [Object-Relational Mapper] to simplify database access.  In this project I've stuck with mainstream Entity Framework, but could have used Dapper or Linq2DB.
 
 There's no classic Repository Pattern implementation.  Instead I use a generics based Data Broker pattern that removes most of the repository pattern complexity.  Generics are applied at the method level: one data broker service handles CRUD and List operations for all data sets.
 
-I also keep EF is simple, `DataSets` map directly to database tables and views.  I'm a firm believer in clean design: the relationships between data objects is part of the application/business logic and belongs in the core domain, definitley not the Data layer! 
+I keep EF simple, `DataSets` map directly to database tables and views.  I'm a firm believer in clean design: the relationships between data objects is part of the application/business logic and belongs in the core domain, definitley not the Data layer! 
