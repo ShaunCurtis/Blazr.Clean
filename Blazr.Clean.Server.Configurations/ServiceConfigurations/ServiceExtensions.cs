@@ -4,7 +4,12 @@
 /// If you use it, donate something to a charity somewhere
 /// ============================================================
 
-namespace Blazr.Clean;
+using Blazr.Clean.Core;
+using Blazr.Clean.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace Blazr.Clean.Server.Configurations;
 
 /// <summary>
 /// This startic class holds the extension methods for configuring 

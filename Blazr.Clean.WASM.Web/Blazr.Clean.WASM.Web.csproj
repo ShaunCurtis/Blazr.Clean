@@ -11,8 +11,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+    <ProjectReference Include="..\Blazr.Clean.Controllers\Blazr.Clean.Controllers.csproj" />
+    <ProjectReference Include="..\Blazr.Clean.Server.Configurations\Blazr.Clean.Server.Configurations.csproj" />
     <ProjectReference Include="..\Blazr.Clean.WASM\Blazr.Clean.WASM.csproj" />
-    <ProjectReference Include="..\Blazr.Clean\Blazr.Clean.csproj" />
   </ItemGroup>
 
 </Project>

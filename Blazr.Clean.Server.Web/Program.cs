@@ -1,4 +1,4 @@
-using Blazr.Clean;
+using Blazr.Clean.Server.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
 

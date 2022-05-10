@@ -1,5 +1,5 @@
-using Blazr.Clean;
 using Blazr.Clean.Data;
+using Blazr.Clean.Server.Configurations;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.EntityFrameworkCore;
 
