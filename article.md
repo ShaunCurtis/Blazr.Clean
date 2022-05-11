@@ -1,8 +1,8 @@
 # Building a Clean Design Blazor Application
 
-In this article I'm going to cover the basics of how to put  together a well structured, well written Blazor Application.  This is not an attempt at "Blazor Best Practices" or "The Way to write a Blazor Application".
+In this article I cover the basics of how to put together a well structured and written Blazor Application.  This is not an attempt at "Blazor Best Practices" or "The Way to write a Blazor Application".  Choose whatever methodologies and coding practices you wish.  Don't develop your first Blazor application without making those choices!
 
-I've tried to keep this as simple as I can.  I've taken the out-of-the-box Blazor template and rebuilt it concentrating on restructuring the `FetchData` page and the data pipeline behind it.
+I've tried to keep this as simple.  I've taken the out-of-the-box Blazor template and rebuilt it concentrating on restructuring the `FetchData` page and the data pipeline behind it.
 
 The Github repository contains a fairly comprehensive set of notes.  This article provides an overview of the project.  For detail go to the repository.
 
@@ -20,39 +20,39 @@ This separates code out into three primary domains:
 
 3. **UI Domain** - this contains all the UI code.  It's specific to the UI framework used for the application.
 
-The key concept we are trying to achieve is our core domain code has no dependancies on the Data, UI or any support domain code.  It defines the interfaces it uses to communicate downward with the data domain and the interfaces it provides upward to the UI.  In principle we can change out the data source from a SQL database to an API and the core domain shouldn't care.  We should be able to plug different front ends onto the same core domain code.
+The key concept we are trying to achieve is to remove any dependancies our core domain code has on the Data, UI or any support domain code.  The core defines the interfaces it uses to communicate downward with the data domain and the interfaces it provides upward to the UI.  In principle we can change out the data source from a SQL database to an API and the core domain doesn't change.  We can plug different front ends onto the same core domain code.
 
 Let's look at how we achieve this is the solution.
 
 ### One Solution Many Projects
 
-You'll notice that the solution has a lot of projects.  That's by design.  Each project represents a code domain or application endpoint.  With projects we can tighlty manage our interdependancies, and separate out blocks of code that are used by different application endpoints.  Two examples:
+You'll notice that the solution has a lot of projects.  That's by design.  Each project represents a code domain or application endpoint.  Using projects we can tightly control and manage our interdependancies, and separate out blocks of code that are used by different application endpoints.  Two examples:
 
-1. The Core project has no project dependancies, so therefore doesn't depend on the data or UI dopmain code.
+1. The Core project has no project dependancies: it doesn't on the data or UI domain code.
 2. The API controllers are used in two application endpoints.  So we break then out into a library project.  They also have specific library requirements which mean we can't mix them with a WASM project code. 
 
 ### What goes in the Core Domain?
 
 Answer:  Anything it needs to use.
 
-Let's look at the Core project.  It's divided into *entities* so we can keep together all the code modules for each data set e.g. Weather Forecasts.  *Base* contains all the interfaces and base classes.
+Here's the Core project.  It's divided into *entities* to keep together all the code modules for each data set e.g. Weather Forecasts.  *Base* contains all the interfaces and base classes.
 
 ![Core Project](core-project-structure.png)
 
-Note that we have the `WeatherForecastViewService` and the `WeatherForecast` data class.  First pass would suggest that data classes belong in the data domain. But, consider who will use them.  All the domains, so based on our Clean Design dependancy model, they belong in the core domain.
+Note the `WeatherForecastViewService` and the `WeatherForecast` data class.  First pass would suggest that data classes belong in the data domain. But, consider who will use them?  All the domains: so based on our clean design dependancy model, they belong in the core domain.
 
 ### Interfaces and Dependancy Injection
 
-We use interfaces to define the communications channels between our primary domains.
+We use interfaces to define the communications between our primary domains.
 
 #### Core to Data
 
-In this application the core only needs the following from the data domain:
+In this application the core only needs the following functionality from the data domain:
 
 1. Provide a collection of Weather Forecasts
 2. Add a Weather Forecast to the data set.
 
-We can define that in our intwrface:
+We can define that in our interface:
 
 ```csharp
 public interface IDataBroker
