@@ -31,6 +31,13 @@ You'll notice that the solution has a lot of projects.  That's by design.  Each 
 1. The Core project has no project dependancies: it doesn't on the data or UI domain code.
 2. The API controllers are used in two application endpoints.  So we break then out into a library project.  They also have specific library requirements which mean we can't mix them with a WASM project code. 
 
+You'll also notice that most of the projects, including the primsry domain projects are standard libraries.
+
+1. Data and Core don't contain any Blazor specific code.
+2. UI is a Razor library.
+3. The WASM projects are specific.
+
+ 
 ### What goes in the Core Domain?
 
 Answer:  Anything it needs to use.
@@ -50,7 +57,7 @@ We use interfaces to define the communications between our primary domains.
 In this application the core only needs the following functionality from the data domain:
 
 1. Provide a collection of Weather Forecasts
-2. Add a Weather Forecast to the data set.
+2. Add ats Weather Forecast to the data set.
 
 We can define that in our interface:
 
@@ -62,7 +69,7 @@ public interface IDataBroker
 }
 ```
 
-`GetRecordsAsync` is a CQRS query method that returns an `IEnumerable` constrained collection.  I don't code "get all" methods: you can never guarantee how many records a query will return, so don't ask.  The `ListOptions` object defines the page to return.
+`GetRecordsAsync` is a CQRS query method that returns an `IEnumerable` constrained collection.  I don't code "get all" methods without constraints: you can never guarantee how many records a query will return.  The `ListOptions` object defines the paging.
 
 ```csharp
 public class ListOptions
@@ -74,18 +81,18 @@ public class ListOptions
 
 `AddRecordAsync` is a CQRS command method.  It returns a status `bool`.
 
-Each method uses generics - `TRecord`.  We make the call defining which specific data class we want to retrieve.  We'll see how thia gets implemented in the data domain shortly.
+Each method uses generics.  Each call defines which specific data class to retrieve.  We'll see how this gets implemented in the data domain shortly.
 
 
 #### UI to Core
 
-UI to core communications are complex, and as the UI depends on the Core then strictly you don't need to implement specific code interfaces, just define the public objects and methods/properties.
+UI to core communications are more complex.  As the UI depends on the Core then strictly there's no need to implement specific code interfaces, just define the public objects and methods/properties.
 
-However, you can use interfaces to help boilerplate your code.  This application defines an `IViewService` to standardise the normal functionality that data set views implement.
+However, interfaces help boilerplate our code.  This application defines an `IViewService` to standardise the normal functionality data set views implement.
 
-1. `ListUpdated` is an event that is raised whenever `Records` is updated.
+1. `ListUpdated` is an event raised whenever `Records` is updated.
 2. `Records` holds the current record collection based on the last `GetRecordsAsync` call.
-3. `Record` holds the currently active recordaet record.
+3. `Record` holds the currently active recordset record.
 4. `AddRecordAsync` adds the current record to the data store.
 5. `GetRecordsAsync` retrieves a recordset based on the `ListOptions` provided into the `Records` collection.
 
@@ -100,9 +107,9 @@ public interface IViewService<TRecord> where TRecord : class
 }
 ```
 
-It's important to understand that the view holds the data, not the UI components that consume the view.
+It's important to understand that the view holds the data, not the UI components.
 
-These services are loaded into the application in Program.  Herer's the service definitions for the Blazor Server application.
+Services are loaded into the application in Program.  Herer's the service definitions for the Blazor Server application.
 
 
 ```csharp
@@ -173,3 +180,17 @@ public async ValueTask GetRecordsAsync(ListOptions options)
     this.Records = await _broker.GetRecordsAsync<TRecord>(options);
 }
 ```
+
+The concrete implementation for `WeatherForecast` looks like this:
+
+```csharp
+public class WeatherForecastViewService : ViewServiceBase<WeatherForecast>
+{
+    public WeatherForecastViewService(IDataBroker dataBroker)
+        : base(dataBroker)
+    { }
+}
+```
+
+Fix the generic type and call the base constructor.
+
