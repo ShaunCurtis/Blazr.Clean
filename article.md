@@ -2,7 +2,7 @@
 
 In this article I cover the basics of how to put together a well structured and written Blazor Application.  This is not an attempt at "Blazor Best Practices" or "The Way to write a Blazor Application".  Choose whatever methodologies and coding practices you wish.  Don't develop your first Blazor application without making those choices!
 
-I've tried to keep this as simple.  I've taken the out-of-the-box Blazor template and rebuilt it concentrating on restructuring the `FetchData` page and the data pipeline behind it.
+I've tried to keep this simple.  I've taken the out-of-the-box Blazor template and rebuilt it concentrating on restructuring the `FetchData` page and the data pipeline behind it.
 
 The Github repository contains a fairly comprehensive set of notes.  This article provides an overview of the project.  For detail go to the repository.
 
@@ -20,23 +20,23 @@ This separates code out into three primary domains:
 
 3. **UI Domain** - this contains all the UI code.  It's specific to the UI framework used for the application.
 
-The key concept we are trying to achieve is to remove any dependancies our core domain code has on the Data, UI or any support domain code.  The core defines the interfaces it uses to communicate downward with the data domain and the interfaces it provides upward to the UI.  In principle we can change out the data source from a SQL database to an API and the core domain doesn't change.  We can plug different front ends onto the same core domain code.
+The key concept is to remove any dependancies the core domain code has on the data, UI or any support domain code.  The core defines the interfaces it uses to communicate downward with the data domain and upward to the UI.  In principle the data source can be changed from a SQL database to an API and the core domain code doesn't change, or a different front end can be plugged  onto the same core domain code.
 
 Let's look at how we achieve this is the solution.
 
 ### One Solution Many Projects
 
-You'll notice that the solution has a lot of projects.  That's by design.  Each project represents a code domain or application endpoint.  Using projects we can tightly control and manage our interdependancies, and separate out blocks of code that are used by different application endpoints.  Two examples:
+The solution has a lot of projects.  That's by design.  Each project represents a code domain or application endpoint.  Using projects we can tightly control and manage our interdependancies, and separate out blocks of code that are used by different application endpoints.  Two examples:
 
 1. The Core project has no project dependancies: it doesn't on the data or UI domain code.
 2. The API controllers are used in two application endpoints.  So we break then out into a library project.  They also have specific library requirements which mean we can't mix them with a WASM project code. 
 
-You'll also notice that most of the projects, including the primsry domain projects are standard libraries.
+Most of the projects, including the primsry domain projects, are standard libraries.
 
 1. Data and Core don't contain any Blazor specific code.
 2. UI is a Razor library.
-3. The WASM projects are specific.
-
+3. The WASM projects are specific, compiling and building the support files for deployement to the browser.
+4. The endpoint application projects are standard DotNetCore web projects.
  
 ### What goes in the Core Domain?
 
@@ -194,3 +194,12 @@ public class WeatherForecastViewService : ViewServiceBase<WeatherForecast>
 
 Fix the generic type and call the base constructor.
 
+## EndPoint Applications
+
+The solution contains three different applications:
+
+1. A standard Blazor Server Application.
+2. A standard hosted Blazor Web Assembly Application.
+3. A Dual hosted application from which you can switch between Blazor Server to Blazor Web Assembly.
+
+ 
