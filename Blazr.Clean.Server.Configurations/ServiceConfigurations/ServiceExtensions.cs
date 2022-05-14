@@ -22,7 +22,7 @@ public static class ServiceExtensions
     /// </summary>
     /// <param name="services"></param>
     public static void AddBlazorInMemoryServerAppServices(this IServiceCollection services)
-        => AddBlazorServerAppServices<InMemoryDbContext>(services, options => options.UseInMemoryDatabase("TestDb"));
+        => AddBlazorServerAppServices<InMemoryWeatherDbContext>(services, options => options.UseInMemoryDatabase("TestDb"));
 
     /// <summary>
     /// Builds any Blazor Server configuration that uses a EF database.
@@ -37,6 +37,7 @@ public static class ServiceExtensions
         services.AddDbContextFactory<TDbContext>(optionsAction);
         services.AddSingleton<IDataBroker, ServerDataBroker>();
         services.AddScoped<IViewService<WeatherForecast>, WeatherForecastViewService>();
+        services.AddScoped<IWeatherForecastDataService, WeatherForecastDataService>();
     }
 
     /// <summary>

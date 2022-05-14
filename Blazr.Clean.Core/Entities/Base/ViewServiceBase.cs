@@ -54,7 +54,7 @@ public abstract class ViewServiceBase<TRecord> : IViewService<TRecord> where TRe
     }
 
     // Command method that populates the Records collection based on the List Options
-    public async ValueTask GetRecordsAsync(ListOptions options)
+    public virtual async ValueTask GetRecordsAsync(ListOptions options)
     {
         // Save the latest options locally
         _options = options;

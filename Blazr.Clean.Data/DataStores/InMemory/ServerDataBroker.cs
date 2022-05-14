@@ -8,10 +8,10 @@ namespace Blazr.Clean.Data;
 
 public class ServerDataBroker : IDataBroker
 {
-    private readonly IDbContextFactory<InMemoryDbContext> database;
+    private readonly IDbContextFactory<InMemoryWeatherDbContext> database;
     private bool _initialized = false;
 
-    public ServerDataBroker(IDbContextFactory<InMemoryDbContext> db)
+    public ServerDataBroker(IDbContextFactory<InMemoryWeatherDbContext> db)
     {
         this.database = db;
         // We need to populate the database so we get a test data set from the static class WeatherForecastData

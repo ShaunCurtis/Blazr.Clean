@@ -6,9 +6,9 @@
 
 namespace Blazr.Clean.Data;
 
-public class InMemoryDbContext : DbContext
+public class InMemoryWeatherDbContext : DbContext, IWeatherDbContext
 {
     public DbSet<WeatherForecast>? WeatherForecast { get; set; }
 
-    public InMemoryDbContext(DbContextOptions<InMemoryDbContext> options) : base(options) { }
+    public InMemoryWeatherDbContext(DbContextOptions<InMemoryWeatherDbContext> options) : base(options) { }
 }

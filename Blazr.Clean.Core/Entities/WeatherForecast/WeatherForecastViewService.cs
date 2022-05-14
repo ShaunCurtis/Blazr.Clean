@@ -12,7 +12,19 @@ namespace Blazr.Clean.Core;
 /// </summary>
 public class WeatherForecastViewService : ViewServiceBase<WeatherForecast>
 {
-    public WeatherForecastViewService(IDataBroker dataBroker)
+    private readonly IWeatherForecastDataService _weatherForecastDataService;
+    public WeatherForecastViewService(IDataBroker dataBroker, IWeatherForecastDataService dataService)
         : base(dataBroker)
-    { }
+    { 
+        _weatherForecastDataService = dataService;
+    }
+
+    public override async ValueTask GetRecordsAsync(ListOptions options)
+    {
+        var cancel = new CancellationToken();
+        var request = new ItemsProviderRequest(options.StartIndex, options.PageSize, cancel);
+        // Gets the record collection
+        var handler =  _weatherForecastDataService.GetPagedRecordQueryHandler(new PagedWeatherForecastsQuery(request));
+        this.Records = await handler.ExecuteAsync() ;
+    }
 }

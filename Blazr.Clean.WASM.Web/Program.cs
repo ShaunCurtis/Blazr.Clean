@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddServerAppServices<InMemoryDbContext>(options => options.UseInMemoryDatabase("TestDb"));
+builder.Services.AddServerAppServices<InMemoryWeatherDbContext>(options => options.UseInMemoryDatabase("TestDb"));
 builder.Services.AddControllers().PartManager.ApplicationParts.Add(new AssemblyPart(typeof(Blazr.Clean.Controllers.WeatherForecastController).Assembly));
 
 var app = builder.Build();
