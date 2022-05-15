@@ -6,7 +6,7 @@
 
 namespace Blazr.Clean.Core;
 
-public class UpdateWeatherForecastCommand : IRecordCommand<CommandResponse>
+public class UpdateWeatherForecastCommand : IRecordAction<CommandResponse>
 {
     public WeatherForecast Record { get; private set; }
 

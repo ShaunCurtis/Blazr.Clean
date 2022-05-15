@@ -1,7 +1,7 @@
 ﻿namespace Blazr.Clean.Data;
 
 public class UpdateWeatherForecastHandler
-    : IRecordCommandHandler<UpdateWeatherForecastCommand, CommandResponse>
+    : IRecordActionHandler<UpdateWeatherForecastCommand, CommandResponse>
 {
     private readonly IDbContextFactory<InMemoryWeatherDbContext> _dbContextFactory;
     private readonly UpdateWeatherForecastCommand _command;

@@ -1,7 +1,7 @@
 ﻿namespace Blazr.Clean.Data;
 
 public class UpdateWeatherForecastAPIHandler
-    : IRecordCommandHandler<UpdateWeatherForecastCommand, CommandResponse>
+    : IRecordActionHandler<UpdateWeatherForecastCommand, CommandResponse>
 {
     private readonly HttpClient _httpClient;
     private readonly UpdateWeatherForecastCommand _command;

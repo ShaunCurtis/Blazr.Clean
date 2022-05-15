@@ -16,6 +16,6 @@ public class WeatherForecastDataFactory : IWeatherForecastDataFactory
     public IRecordActionHandler<PagedWeatherForecastsQuery, IEnumerable<WeatherForecast>> GetPagedRecordsQueryHandler(PagedWeatherForecastsQuery query)
         => new PagedWeatherForecastHandler(_dbContext, query);
 
-    public IRecordCommandHandler<UpdateWeatherForecastCommand, CommandResponse> UpdateRecordCommandHandler(UpdateWeatherForecastCommand command)
+    public IRecordActionHandler<UpdateWeatherForecastCommand, CommandResponse> UpdateRecordCommandHandler(UpdateWeatherForecastCommand command)
         => new UpdateWeatherForecastHandler(_dbContext, command);
 }
