@@ -37,7 +37,7 @@ public static class ServiceExtensions
         services.AddDbContextFactory<TDbContext>(optionsAction);
         services.AddSingleton<IDataBroker, ServerDataBroker>();
         services.AddScoped<IViewService<WeatherForecast>, WeatherForecastViewService>();
-        services.AddScoped<IWeatherForecastDataService, WeatherForecastDataService>();
+        services.AddScoped<IWeatherForecastDataFactory, WeatherForecastDataFactory>();
     }
 
     /// <summary>

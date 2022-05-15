@@ -1,7 +1,7 @@
 ﻿namespace Blazr.Clean.Data;
 
 public class PagedWeatherForecastHandler
-    : IRecordQueryHandler<PagedWeatherForecastsQuery, IEnumerable<WeatherForecast>>
+    : IRecordActionHandler<PagedWeatherForecastsQuery, IEnumerable<WeatherForecast>>
 {
     private IDbContextFactory<InMemoryWeatherDbContext> _dbContextFactory { get; set; }
     private PagedWeatherForecastsQuery _query;

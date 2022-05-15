@@ -4,7 +4,11 @@
 
 Clean design is a modern software design architecture appropriate for Web based projects.  In it's most basic implementation it's neither heavy duty or requires a training course to understand and implement.
 
-It's core principles are separation of code into logical domains and the **Dependancy Rule**.  Clean design can be visualized as a set of concentric rings.  Each ring can only depend on an inner layer.  Specifically a domain can have no dependencies on a domain in an outer ring or a domain in the same ring.  The diagram below shows the principle rings.
+It's core principles are:
+1. Separation of Concerns.
+2. The Dependancy Rule.  
+
+Clean design can be visualized as a set of concentric rings with domains representing the primary coencerns.  Dependencies flow inward: a domain can have no dependencies on a domain in an outer ring or a domain in the same ring.  The diagram below shows the principle rings.
 
 ![Clean Design Domains](./clean-design-domains.png)
 
@@ -17,11 +21,11 @@ The glue that makes Clean Design possible is abstraction and dependency injectio
 1. Abstraction is the process of defining connections between domains as interfaces.
 2. Dependency Injection is software framework that manages the lifecycle of object instances within a DI container.   
 
-It's easier to demonstrate the principles, that try to provide a detailed explanation.
+It's easier to demonstrate the principles in a simple example that try to provide a detailed explanation.
 
-Taking the Blazor Server Template `WeatherForecast`, lets look at how we can refactor some of the code.
+We can refactor some of the Blazor Server Template code for `WeatherForecast` and `FetchData`.
 
-`FetchData` requires a collection of WeatherForecasts.  We can define a View interface that provides the data.
+`FetchData` requires a collection of WeatherForecasts.  We can define a View interface to encapsulate that functionality.
 
 ```csharp
 public interface IWeatherForecastView
@@ -62,23 +66,46 @@ Note that the registration is as `IWeatherForecastView`.
 //show as table IWeatherForecastView.WeatherForecasts
 ```
 
-We have abstracted the core domain View from the UI.  All UI interaction with the view class is through the interface.  We can register a different `IWeatherForecastView` implementation class in the services container and the UI would not know the difference.  It will work with any class that implements the `IWeatherForecastView` interface.
+We have abstracted the core domain View from the UI domain.  All UI interaction with the view class is through the interface.  We can register a different `IWeatherForecastView` implementation class in the services container and the UI dosen't need to know or care about the difference.  It will work with any class that implements the `IWeatherForecastView` interface.
 
-### Dependency Management
+The separation of concerns principles are enforced through projects and project dependancies.  All the application code resides in libraries.  The applications, in this case Blazor Server and Blazor WASM SPAs, are endpoints.
 
 ![Clean Design](./clean-design.png)
 
-Dependencies are enforced through projects and project dependancies.  Each domain is a library project with tightly controlled project dependencies.
+Primary Domains:
+
+1. *Blazr.Clean.Data*
+2. *Blazr.Clean.Core*
+3. *Blazr.Clean.UI*
+
+The support domains:
+
+4. *Blazr.Clean.Controllers* - the API controllers.
+
+The build domains:
+
+5. *Blazr.Clean.WASM* - builds the Web Assembly code.
+6. *Blazr.Clean.WASM.Dual* - builds the Web Assembly code for the Dual Application.
+7. *Blazr.Clean.Server.Configurations* - configuration data for the Server applications.
+8. *Blazr.Clean.WASM.Configurations* - configuration data for the WASM builds.
+
+The endpoint applications - these can be set as the startup project.
+
+7. *Blazr.Clean.Server.Web* - the Blazor Server application.
+8. *Blazr.Clean.WASM.Web* - the Blazor Web Assembly NetCore hosted application.
+9. *Blazr.Clean.Dual.Web* - the dual hosted application.
+
+## Entity Domains
+
+The primary organisation of the solution is on separation of concerns.  The secondary organisation is on entities.  You will see an *Entities* folder in each domain.  An *entity* is a dataset or other logical grouping of code.  In this application the only entity is *WeatherForcasts*.  The *Base* entity contains all the non-specific code, such as interfaces and generic abstract classes. 
 
 ## Coding Standards
 
-I (try to) implement good code practices throughout the solution: principally SOLID and basic CQS principles.  I use coding patterns where appropiate.
-
-Dependancy Injection is probably the most important SOLID principle to understand and implement in Blazor.  You'll see it implemented throughout the solution.
+I (try to) implement good code practices throughout the solution: principally SOLID and basic CQS principles in classes.  I use coding patterns where appropiate.
 
 ## Generics and Boilerplating
 
-Generics make boilerplating code possible.  A common design pattern is:
+Using Generics we can boilerplate code.  A common design pattern is:
 
 1. An `interface` to define the common functionality and abstraction.
 2. An `abstract` base class that implements the interface functionality using generics.
@@ -86,7 +113,7 @@ Generics make boilerplating code possible.  A common design pattern is:
 
 One interface, one abstract class, many concrete implementations.
 
-We can see this in the View Services.  The concrete `WeatherForecastViewService` looks like this:
+View Services demonstrate this pattern.  The concrete `WeatherForecastViewService` looks like this:
 
 ```csharp
 public class WeatherForecastViewService : ViewServiceBase<WeatherForecast>
@@ -97,10 +124,20 @@ public class WeatherForecastViewService : ViewServiceBase<WeatherForecast>
 }
 ```
 
+A concrete class that fixes `TRecord` and a constructor.
+
 ## Database Access
 
-I use an ORM [Object-Relational Mapper] to simplify database access.  In this project I've stuck with mainstream Entity Framework, but could have used Dapper or Linq2DB.
+I use ORMs [Object-Relational Mapper] to simplify database access.  In this project I've stuck with mainstream Entity Framework, but could have used Dapper or Linq2DB.
 
-There's no classic Repository Pattern implementation.  Instead I use a generics based Data Broker pattern that removes most of the repository pattern complexity.  Generics are applied at the method level: one data broker service handles CRUD and List operations for all data sets.
+There's no classic Repository pattern implementation.  I've implemented two alternatives.
 
-I keep EF simple, `DataSets` map directly to database tables and views.  I'm a firm believer in clean design: the relationships between data objects is part of the application/business logic and belongs in the core domain, definitley not the Data layer! 
+1. Generic Data Broker.  This is a relative of the Repository pattern.  It uses method based generics to remove repetition - a drawback of the repository pattern.  There's one data broker service handles CRUD and List operations for all data sets.
+
+2. A Command/Query entity based pattern.  This is more complex than the generic data broker.  It's overkill for a simple project.  It'a place is in larger projects with larger more complex data pipelines.
+
+I use both patterns in a project.  The Data Broker pattern is used for all bulk standard CRUD and list operations: no extensions allowed.  The CQS pattern is used for all custom operations. 
+
+**A note on ORMs and EF.**
+  
+I keep EF simple and treat it as a standard ORM.  `DataSets` map directly to database tables and views: no relationship building.  Clean design dictates the relationships between data objects is part of the application/business logic and belongs in the core domain, definitley not the Data layer!

@@ -6,4 +6,4 @@
 
 namespace Blazr.Clean.Core;
 
-public interface IRecordCommand<out TResult> { }
+public interface IRecordCommand<out TResponse> { }

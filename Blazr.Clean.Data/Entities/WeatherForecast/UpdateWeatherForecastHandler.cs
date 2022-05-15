@@ -3,8 +3,8 @@
 public class UpdateWeatherForecastHandler
     : IRecordCommandHandler<UpdateWeatherForecastCommand, CommandResponse>
 {
-    private IDbContextFactory<InMemoryWeatherDbContext> _dbContextFactory { get; set; }
-    private UpdateWeatherForecastCommand _command;
+    private readonly IDbContextFactory<InMemoryWeatherDbContext> _dbContextFactory;
+    private readonly UpdateWeatherForecastCommand _command;
 
     public UpdateWeatherForecastHandler(IDbContextFactory<InMemoryWeatherDbContext> factory, UpdateWeatherForecastCommand command )
     { 

@@ -6,11 +6,10 @@
 
 namespace Blazr.Clean.Core;
 
-public class PagedWeatherForecastsQuery : IRecordQuery<IEnumerable<WeatherForecast>>
+public class PagedWeatherForecastsQuery : IRecordAction<IEnumerable<WeatherForecast>>
 {
     public ItemsProviderRequest Request { get; private set; }
 
     public PagedWeatherForecastsQuery(ItemsProviderRequest request)
         => Request = request;
-
 }

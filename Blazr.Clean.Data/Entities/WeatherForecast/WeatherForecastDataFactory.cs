@@ -6,14 +6,14 @@
 
 namespace Blazr.Clean.Data;
 
-public class WeatherForecastDataService : IWeatherForecastDataService
+public class WeatherForecastDataFactory : IWeatherForecastDataFactory
 {
     private readonly IDbContextFactory<InMemoryWeatherDbContext> _dbContext;
 
-    public WeatherForecastDataService(IDbContextFactory<InMemoryWeatherDbContext> dbContext)
+    public WeatherForecastDataFactory(IDbContextFactory<InMemoryWeatherDbContext> dbContext)
        => _dbContext = dbContext;
 
-    public IRecordQueryHandler<PagedWeatherForecastsQuery, IEnumerable<WeatherForecast>> GetPagedRecordsQueryHandler(PagedWeatherForecastsQuery query)
+    public IRecordActionHandler<PagedWeatherForecastsQuery, IEnumerable<WeatherForecast>> GetPagedRecordsQueryHandler(PagedWeatherForecastsQuery query)
         => new PagedWeatherForecastHandler(_dbContext, query);
 
     public IRecordCommandHandler<UpdateWeatherForecastCommand, CommandResponse> UpdateRecordCommandHandler(UpdateWeatherForecastCommand command)

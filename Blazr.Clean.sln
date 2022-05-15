@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazr.Clean", "Blazr.Clean\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{B7D0DEFF-ADC1-4F77-858B-9AE2DC2050BC}"
 	ProjectSection(SolutionItems) = preProject
+		APIControllers.md = APIControllers.md
 		Applications.md = Applications.md
+		CQSData.md = CQSData.md
 		Data.md = Data.md
 		Design.md = Design.md
 		readme.md = readme.md
@@ -33,9 +35,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazr.Clean.WASM.Configurat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazr.Clean.Dual.Web", "Blazr.Clean.Dual.Web\Blazr.Clean.Dual.Web.csproj", "{D256ABB1-81E4-48F3-9B80-0FC6ACD9296C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazr.Clean.Server.Configurations", "Blazr.Clean.Server.Configurations\Blazr.Clean.Server.Configurations.csproj", "{1E493134-6E23-4810-8E3B-D2DD39657416}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazr.Clean.Server.Configurations", "Blazr.Clean.Server.Configurations\Blazr.Clean.Server.Configurations.csproj", "{1E493134-6E23-4810-8E3B-D2DD39657416}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazr.Clean.Controllers", "Blazr.Clean.Controllers\Blazr.Clean.Controllers.csproj", "{8C996264-7E75-490E-B94A-3A3036714658}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazr.Clean.Controllers", "Blazr.Clean.Controllers\Blazr.Clean.Controllers.csproj", "{8C996264-7E75-490E-B94A-3A3036714658}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

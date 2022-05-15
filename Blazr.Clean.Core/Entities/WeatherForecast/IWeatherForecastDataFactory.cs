@@ -6,9 +6,9 @@
 
 namespace Blazr.Clean.Core;
 
-public interface IWeatherForecastDataService
+public interface IWeatherForecastDataFactory
 {
-    IRecordQueryHandler<PagedWeatherForecastsQuery, IEnumerable<WeatherForecast>> GetPagedRecordsQueryHandler(PagedWeatherForecastsQuery query);
+    IRecordActionHandler<PagedWeatherForecastsQuery, IEnumerable<WeatherForecast>> GetPagedRecordsQueryHandler(PagedWeatherForecastsQuery query);
 
     IRecordCommandHandler<UpdateWeatherForecastCommand, CommandResponse> UpdateRecordCommandHandler(UpdateWeatherForecastCommand command);
 }

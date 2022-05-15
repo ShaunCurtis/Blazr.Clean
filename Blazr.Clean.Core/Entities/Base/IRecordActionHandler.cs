@@ -6,8 +6,8 @@
 
 namespace Blazr.Clean.Core;
 
-public interface IRecordQueryHandler<in TQuery, TResponse>
-    where TQuery : IRecordQuery<TResponse>
+public interface IRecordActionHandler<in TAction, TResult>
+    where TAction : IRecordAction<TResult>
 {
-    ValueTask<TResponse> ExecuteAsync();
+    ValueTask<TResult> ExecuteAsync();
 }
