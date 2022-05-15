@@ -4,12 +4,13 @@
 
 Clean design is a modern software design architecture appropriate for Web based projects.  In it's most basic implementation it's neither heavy duty or requires a training course to understand and implement.
 
-It's core principle is the **Dependancy Rule**.  Clean design can be visualized as a set of concentric rings.  Each ring can only depend on an inner layer.  Specifically a domain can have no dependencies on a domain in an outer ring or a domain in the same ring.  The diagram below shows the principle rings.
+It's core principles are separation of code into logical domains and the **Dependancy Rule**.  Clean design can be visualized as a set of concentric rings.  Each ring can only depend on an inner layer.  Specifically a domain can have no dependencies on a domain in an outer ring or a domain in the same ring.  The diagram below shows the principle rings.
 
 ![Clean Design Domains](./clean-design-domains.png)
 
 In smaller projects the domain and application rings are often combined into a single core ring.
 
+### Dependency Injection and Abstraction
 
 The glue that makes Clean Design possible is abstraction and dependency injection.
 
@@ -63,22 +64,21 @@ Note that the registration is as `IWeatherForecastView`.
 
 We have abstracted the core domain View from the UI.  All UI interaction with the view class is through the interface.  We can register a different `IWeatherForecastView` implementation class in the services container and the UI would not know the difference.  It will work with any class that implements the `IWeatherForecastView` interface.
 
-
-
+### Dependency Management
 
 ![Clean Design](./clean-design.png)
 
-The separation of concerns principles are enforced through projects and project dependancies.  All the application code resides in libraries.  The applications, in this case Blazor Server and Blazor WASM SPAs, are endpoints.
+Dependencies are enforced through projects and project dependancies.  Each domain is a library project with tightly controlled project dependencies.
 
 ## Coding Standards
 
-I (try to) implement good code practices throughout the solution: principally SOLID and CQRS.  I use coding patterns where appropiate.
+I (try to) implement good code practices throughout the solution: principally SOLID and basic CQS principles.  I use coding patterns where appropiate.
 
 Dependancy Injection is probably the most important SOLID principle to understand and implement in Blazor.  You'll see it implemented throughout the solution.
 
 ## Generics and Boilerplating
 
-Generics let us boilerplate code.  A common design pattern is:
+Generics make boilerplating code possible.  A common design pattern is:
 
 1. An `interface` to define the common functionality and abstraction.
 2. An `abstract` base class that implements the interface functionality using generics.

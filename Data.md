@@ -1,6 +1,13 @@
 # Data
 
-The data classes are in the core domain: they are used throughout the application.
+The application implements two data pipelines to demonstrate two methodologies:
+
+1. A Data Broker pattern
+2. A Command/Query pattern 
+
+## Data Classes
+
+The data classes are core domain objects: they are used throughout the application.
 
 The modified data class `WeatherForecast` looks like this:
 
@@ -10,12 +17,11 @@ public class WeatherForecast
     [Key] public Guid Id { get; set; } = Guid.NewGuid();
     public DateTime Date { get; set; }
     public int TemperatureC { get; set; }
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
     public string? Summary { get; set; }
 }
 ```
 
-It has a new unique ID field labelled with the [Key] attribute for database compatibility: the database needs a unique field to identify records.
+It has a new unique ID field labelled with the [Key] attribute for database compatibility: the database needs a unique field to identify records.  `TemperatureF` has gone.  It's an internal calculated parameter.  We'll add it back in the business logic.
 
 ### Collections
 
